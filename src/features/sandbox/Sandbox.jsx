@@ -7,6 +7,8 @@ import TestMap from "./TestMap";
 
 const Sandbox = () => {
   const { data } = useSelector((state) => state.test);
+  const { loading } = useSelector((state) => state.async);
+  const [target, setTarget] = useState(null);
   const dispatch = useDispatch();
   const defaultProps = {
     center: {
@@ -27,12 +29,22 @@ const Sandbox = () => {
       <h1>Testing 123</h1>
       <h2>The data is : {data}</h2>
       <Button
-        onClick={() => dispatch(increment(20))}
+        name="increment"
+        loading={loading && target === "increment"}
+        onClick={(e) => {
+          dispatch(increment(10));
+          setTarget(e.target.name);
+        }}
         content="increment"
         color="green"
       />
       <Button
-        onClick={() => dispatch(decrement(20))}
+        name="decrement"
+        loading={loading && target === "decrement"}
+        onClick={(e) => {
+          dispatch(decrement(10));
+          setTarget(e.target.name);
+        }}
         content="decrement"
         color="red"
       />

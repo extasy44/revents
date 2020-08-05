@@ -1,3 +1,4 @@
+/* global google */
 import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -11,6 +12,7 @@ import MyTextInput from "../../../app/common/form/MyTextInput";
 import MyTextArea from "../../../app/common/form/MyTextArea";
 import MySelectInput from "../../../app/common/form/MySelectInput";
 import MyDateInput from "../../../app/common/form/MyDateInput";
+import MyPlaceInput from "../../../app/common/form/MyPlaceInput";
 
 const EventForm = ({ match }) => {
   const selectedEvent = useSelector((state) =>
@@ -23,8 +25,8 @@ const EventForm = ({ match }) => {
     title: "",
     category: "",
     description: "",
-    city: "",
-    venue: "",
+    city: { address: "", latLng: null },
+    venue: { address: "", latLng: null },
     date: "",
   };
 
@@ -32,19 +34,31 @@ const EventForm = ({ match }) => {
     title: Yup.string().required("You must provide title"),
     category: Yup.string().required("You must provide category"),
     description: Yup.string().required("You must provide description"),
-    city: Yup.string().required(),
-    venue: Yup.string().required(),
+    city: Yup.object().shape({
+      address: Yup.string().required("City is required"),
+    }),
+    venue: Yup.object().shape({
+      address: Yup.string().required("venue is required"),
+    }),
     date: Yup.string().required(),
   });
+
+  const handleSubmit = (values) => {
+    if (values.length > 1000) {
+      dispatch(updateEvent(values));
+      dispatch(createEvent(values));
+    }
+    console.log(values);
+  };
 
   return (
     <Segment clearing>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
-        onSubmit={(values) => console.log(values)}
+        onSubmit={(values) => handleSubmit(values)}
       >
-        {({ isSubmitting, dirty, isValid }) => (
+        {({ isSubmitting, dirty, isValid, values }) => (
           <Form className="ui form">
             <Header sub color="orange" content="Event Details" />
             <MyTextInput name="title" placeholder="Event title" />
@@ -56,8 +70,18 @@ const EventForm = ({ match }) => {
             <MyTextArea name="description" placeholder="Description" rows={4} />
 
             <Header sub color="orange" content="Event Location Details" />
-            <MyTextInput name="city" placeholder="City" />
-            <MyTextInput name="venue" placeholder="Venue" />
+            <MyPlaceInput name="city" placeholder="City" autoComplete="off" />
+            <MyPlaceInput
+              name="venue"
+              placeholder="Venue"
+              disabled={!values.city.latLng}
+              autoComplete="off"
+              options={{
+                location: new google.maps.LatLng(values.city.latLng),
+                radius: 1000,
+                type: ["establishment"],
+              }}
+            />
             <MyDateInput
               name="date"
               placeholderText="Event Date"

@@ -9,6 +9,10 @@ body {
     rgb(33, 138, 174),
     rgb(32, 167, 172)
   );
+  background-size: 400% 400%;
+  -webkit-animation: moveBackground 10s ease infinite;
+  -moz-animation: moveBackground 10s ease infinite;
+  animation: moveBackground 10s ease infinite;
 }
 
 .ui.main.container {
@@ -27,6 +31,46 @@ body {
   height: 100vh;
 }
 
+@-webkit-keyframes moveBackground {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@-moz-keyframes moveBackground {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes moveBackground {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
 .masthead h1.ui.header {
   font-size: 4em;
+}
+
+.react-datepicker-wrapper {
+  width: 100%;
 }

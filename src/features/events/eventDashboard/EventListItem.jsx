@@ -1,9 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { Segment, Item, Icon, List, Button } from "semantic-ui-react";
+import { format } from "date-fns";
+
+import { deleteEvent } from "../eventActions";
 import EventListAttendee from "./EventListAttendee";
 
-const EventListItem = ({ event, selectEvent, deleteEvent }) => {
+const EventListItem = ({ event }) => {
+  const dispatch = useDispatch();
+
   return (
     <Segment.Group>
       <Segment>
@@ -19,7 +25,7 @@ const EventListItem = ({ event, selectEvent, deleteEvent }) => {
       </Segment>
       <Segment>
         <span>
-          <Icon name="clock" /> {event.date}
+          <Icon name="clock" /> {format(event.date, "MMMM d, yyyy h:mm a")}
           <Icon name="marker" /> {event.venue}
         </span>
       </Segment>
@@ -39,7 +45,12 @@ const EventListItem = ({ event, selectEvent, deleteEvent }) => {
           floated="right"
           content="View"
         />
-        <Button color="red" floated="right" content="Delete" />
+        <Button
+          onClick={() => dispatch(deleteEvent(event.id))}
+          color="red"
+          floated="right"
+          content="Delete"
+        />
       </Segment>
     </Segment.Group>
   );

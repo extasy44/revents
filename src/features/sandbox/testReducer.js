@@ -37,7 +37,6 @@ export const decrement = (number) => {
     try {
       dispatch(asyncActionStart());
       await delay(1000);
-      throw "oops!!";
       dispatch({ type: DECREMENT_COUNTER, payload: number });
       dispatch(asyncActionFinish());
     } catch (error) {

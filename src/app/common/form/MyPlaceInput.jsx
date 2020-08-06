@@ -56,9 +56,11 @@ const MyPlaceInput = ({ label, options, ...props }) => {
               }}
             >
               <List selection>
-                {console.log(suggestions)}
                 {suggestions.map((suggestion) => (
-                  <List.Item {...getSuggestionItemProps(suggestion)}>
+                  <List.Item
+                    key={suggestion.placeId}
+                    {...getSuggestionItemProps(suggestion)}
+                  >
                     <List.Header>{suggestion.description}</List.Header>
                   </List.Item>
                 ))}

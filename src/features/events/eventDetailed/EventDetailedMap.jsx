@@ -8,7 +8,6 @@ const Marker = () => {
 
 const EventDetailedMap = ({ latLng }) => {
   const zoom = 15;
-
   return (
     <Segment attached="bottom" style={{ padding: 0 }}>
       <div style={{ height: 300, width: "100%" }}>

@@ -2,10 +2,7 @@ import { SIGN_IN_USER, SIGN_OUT_USER } from "./authConstants";
 
 const initialState = {
   authenticated: false,
-  currentUser: {
-    email: "jun@test.com",
-    photoURL: "/assets/user.png",
-  },
+  currentUser: null,
 };
 
 const authReducer = (state = initialState, { type, payload }) => {
@@ -16,7 +13,10 @@ const authReducer = (state = initialState, { type, payload }) => {
         authenticated: true,
         currentUser: {
           email: payload.email,
-          photoURL: "/assets/user.png",
+          photoURL: payload.photoURL,
+          uid: payload.uid,
+          displayName: payload.displayName,
+          providerId: payload.providerData[0].providerId,
         },
       };
 

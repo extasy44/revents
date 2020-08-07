@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { Container } from "semantic-ui-react";
 import { ToastContainer } from "react-toastify";
 
@@ -11,9 +12,14 @@ import EventForm from "../../features/events/eventForm/EventForm";
 import Sandbox from "../../features/sandbox/Sandbox";
 import ModalManager from "../common/modals/ModalManager";
 import ErrorComponent from "../common/errors/ErrorComponent";
+import AccountPage from "../../features/auth/AccountPage";
+import LoadingComponent from "./LoadingComponent";
 
 function App() {
   const { key } = useLocation();
+  const { initialized } = useSelector((state) => state.async);
+
+  if (!initialized) return <LoadingComponent content="initializing..." />;
 
   return (
     <>
@@ -35,6 +41,7 @@ function App() {
                 component={EventForm}
                 key={key}
               />
+              <Route path="/account" component={AccountPage} />
               <Route path="/error" component={ErrorComponent} />
             </Container>
           </>

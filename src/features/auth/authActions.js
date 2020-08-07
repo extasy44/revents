@@ -1,11 +1,27 @@
 import { SIGN_IN_USER, SIGN_OUT_USER } from "./authConstants";
+import firebase from "../../app/config/firebase";
+import { API_LOADED } from "../../app/async/asyncReducer";
 
-export const signInUser = (payload) => {
+export const signInUser = (user) => {
   return {
     type: SIGN_IN_USER,
-    payload,
+    payload: user,
   };
 };
+
+export function verfiyAuth() {
+  return function (dispatch) {
+    return firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        dispatch(signInUser(user));
+        dispatch({ type: API_LOADED });
+      } else {
+        dispatch(signOutUser());
+        dispatch({ type: API_LOADED });
+      }
+    });
+  };
+}
 
 export const signOutUser = () => {
   return {

@@ -13,7 +13,13 @@ const SignedOutMenu = ({ setAuthenticated }) => {
         inverted
         content="Login"
       />
-      <Button basic inverted content="Register" style={{ margin: "0.5rem" }} />
+      <Button
+        onClick={() => dispatch(openModal({ modalType: "RegisterForm" }))}
+        basic
+        inverted
+        content="Register"
+        style={{ margin: "0.5rem" }}
+      />
     </Menu.Item>
   );
 };

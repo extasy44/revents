@@ -70,10 +70,7 @@ const PhotosTab = ({ profile, isCurrentUser }) => {
             <Card.Group itemsPerRow={5}>
               {photos.map((photo) => (
                 <Card key={photo.id}>
-                  <Image
-                    src={photo.url}
-                    style={{ height: "81%", width: "100%" }}
-                  />
+                  <Image src={photo.url} />
                   <Button.Group fluid width={2}>
                     <Button
                       name={photo.id}

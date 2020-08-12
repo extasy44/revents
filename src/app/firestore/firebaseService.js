@@ -19,6 +19,7 @@ export const registerInFirebase = async (user) => {
       .createUserWithEmailAndPassword(user.email, user.password);
     await result.user.updateProfile({
       displayName: user.displayName,
+      photoURL: null,
     });
     return await setUserProfileData(result.user);
   } catch (error) {

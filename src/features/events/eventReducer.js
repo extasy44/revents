@@ -3,10 +3,13 @@ import {
   UPDATE_EVENT,
   DELETE_EVENT,
   FETCH_EVENT,
+  LISTEN_TO_EVENT_CHAT,
+  CLEAR_COMMENTS,
 } from "./eventConstants";
 
 const initialState = {
   events: [],
+  comments: [],
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -35,6 +38,19 @@ export default (state = initialState, { type, payload }) => {
         ...state,
         events: payload,
       };
+
+    case LISTEN_TO_EVENT_CHAT:
+      return {
+        ...state,
+        comments: payload,
+      };
+
+    case CLEAR_COMMENTS:
+      return {
+        ...state,
+        comments: [],
+      };
+
     default:
       return state;
   }

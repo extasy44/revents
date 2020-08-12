@@ -71,30 +71,36 @@ const PhotosTab = ({ profile, isCurrentUser }) => {
               {photos.map((photo) => (
                 <Card key={photo.id}>
                   <Image src={photo.url} />
-                  <Button.Group fluid width={2}>
-                    <Button
-                      name={photo.id}
-                      loading={
-                        updating.isUpdating && updating.target === photo.id
-                      }
-                      onClick={(e) => handleSetMainPhoto(photo, e.target.name)}
-                      disabled={photo.url === profile.photoURL}
-                      basic
-                      color="green"
-                      content="Set Main"
-                    />
-                    <Button
-                      name={photo.id}
-                      onClick={(e) => handleDeletingPhoto(photo, e.target.name)}
-                      loading={
-                        deleting.isDeleting && deleting.target === photo.id
-                      }
-                      disabled={photo.url === profile.photoURL}
-                      basic
-                      color="red"
-                      icon="trash"
-                    />
-                  </Button.Group>
+                  {isCurrentUser && (
+                    <Button.Group fluid width={2}>
+                      <Button
+                        name={photo.id}
+                        loading={
+                          updating.isUpdating && updating.target === photo.id
+                        }
+                        onClick={(e) =>
+                          handleSetMainPhoto(photo, e.target.name)
+                        }
+                        disabled={photo.url === profile.photoURL}
+                        basic
+                        color="green"
+                        content="Set Main"
+                      />
+                      <Button
+                        name={photo.id}
+                        onClick={(e) =>
+                          handleDeletingPhoto(photo, e.target.name)
+                        }
+                        loading={
+                          deleting.isDeleting && deleting.target === photo.id
+                        }
+                        disabled={photo.url === profile.photoURL}
+                        basic
+                        color="red"
+                        icon="trash"
+                      />
+                    </Button.Group>
+                  )}
                 </Card>
               ))}
             </Card.Group>

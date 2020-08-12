@@ -3,6 +3,7 @@ import {
   UPDATE_EVENT,
   DELETE_EVENT,
   FETCH_EVENT,
+  LISTEN_TO_EVENT_CHAT,
 } from "./eventConstants";
 import {
   asyncActionStart,
@@ -47,5 +48,12 @@ export const deleteEvent = (eventId) => {
   return {
     type: DELETE_EVENT,
     payload: eventId,
+  };
+};
+
+export const listenToEventChat = (comment) => {
+  return {
+    type: LISTEN_TO_EVENT_CHAT,
+    payload: comment,
   };
 };

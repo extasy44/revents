@@ -201,7 +201,6 @@ export const getUserEventsQuery = (activeTab, userUid) => {
   let eventsRef = db.collection("events");
 
   const today = new Date();
-  console.log(activeTab);
 
   switch (activeTab) {
     case 1:

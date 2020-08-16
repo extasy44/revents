@@ -21,13 +21,11 @@ import {
   cancelEventToggle,
 } from "../../../app/firestore/firestoreService";
 import useFirestoreDoc from "../../../app/hooks/useFirestoreDoc";
-import { listenToEvents } from "../eventActions";
+import { listenToSelectedEvent } from "../eventActions";
 import LoadingComponent from "../../../app/layout/LoadingComponent";
 
 const EventForm = ({ match }) => {
-  const selectedEvent = useSelector((state) =>
-    state.event.events.find((e) => e.id === match.params.id)
-  );
+  const { selectedEvent } = useSelector((state) => state.event);
 
   const { loading, error } = useSelector((state) => state.async);
 
@@ -72,7 +70,7 @@ const EventForm = ({ match }) => {
 
   useFirestoreDoc({
     query: () => listenToEventFromFirestore(match.params.id),
-    data: (event) => dispatch(listenToEvents([event])),
+    data: (event) => dispatch(listenToSelectedEvent(event)),
     deps: [match.params.id, dispatch],
     shouldExecute: !!match.params.id,
   });

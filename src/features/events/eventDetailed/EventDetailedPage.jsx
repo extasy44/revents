@@ -10,13 +10,12 @@ import EventDetailedChat from "./EventDetailedChat";
 import EventDetailedSidebar from "./EventDetailedSidebar";
 import useFirestoreDoc from "../../../app/hooks/useFirestoreDoc";
 import { listenToEventFromFirestore } from "../../../app/firestore/firestoreService";
-import { listenToEvents } from "../eventActions";
+import { listenToSelectedEvent } from "../eventActions";
 import LoadingComponent from "../../../app/layout/LoadingComponent";
 
 const EventDetailedPage = ({ match }) => {
-  const event = useSelector((state) =>
-    state.event.events.find((e) => e.id === match.params.id)
-  );
+  const event = useSelector((state) => state.event.selectedEvent);
+
   const { currentUser } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const { loading, error } = useSelector((state) => state.async);
@@ -25,7 +24,7 @@ const EventDetailedPage = ({ match }) => {
 
   useFirestoreDoc({
     query: () => listenToEventFromFirestore(match.params.id),
-    data: (event) => dispatch(listenToEvents([event])),
+    data: (event) => dispatch(listenToSelectedEvent(event)),
     deps: [match.params.id, dispatch],
   });
 

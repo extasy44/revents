@@ -5,11 +5,15 @@ import {
   FETCH_EVENT,
   LISTEN_TO_EVENT_CHAT,
   CLEAR_COMMENTS,
+  LISTEN_TO_SELECTED_EVENT,
+  CLEAR_EVENTS,
 } from "./eventConstants";
 
 const initialState = {
   events: [],
   comments: [],
+  moreEvents: true,
+  selectedEvent: null,
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -36,7 +40,8 @@ export default (state = initialState, { type, payload }) => {
     case FETCH_EVENT:
       return {
         ...state,
-        events: payload,
+        events: [...state.events, ...payload.events],
+        moreEvents: payload.moreEvents,
       };
 
     case LISTEN_TO_EVENT_CHAT:
@@ -50,7 +55,18 @@ export default (state = initialState, { type, payload }) => {
         ...state,
         comments: [],
       };
+    case LISTEN_TO_SELECTED_EVENT:
+      return {
+        ...state,
+        selectedEvent: payload,
+      };
 
+    case CLEAR_EVENTS:
+      return {
+        ...state,
+        events: [],
+        moreEvents: true,
+      };
     default:
       return state;
   }

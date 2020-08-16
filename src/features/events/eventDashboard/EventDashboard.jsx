@@ -11,7 +11,7 @@ import EventsFeed from "./EventsFeed";
 
 const EventDashboard = () => {
   const dispatch = useDispatch();
-  const limit = 2;
+  const limit = 4;
   const { events, moreEvents } = useSelector((state) => state.event);
   const { loading } = useSelector((state) => state.async);
   const { authenticated } = useSelector((state) => state.auth);

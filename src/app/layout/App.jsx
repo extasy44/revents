@@ -15,6 +15,7 @@ import ErrorComponent from "../common/errors/ErrorComponent";
 import AccountPage from "../../features/auth/AccountPage";
 import LoadingComponent from "./LoadingComponent";
 import ProfilePage from "../../features/profiles/profilePage/ProfilePage";
+import PrivateRoot from "./PrivateRoot";
 
 function App() {
   const { key } = useLocation();
@@ -36,14 +37,14 @@ function App() {
               <Route exact path="/events" component={EventDashboard} />
               <Route exact path="/events/:id" component={EventDetailedPage} />
               <Route exact path="/sandbox" component={Sandbox} />
-              <Route
+              <PrivateRoot
                 exact
                 path={["/createEvent", "/manage/:id"]}
                 component={EventForm}
                 key={key}
               />
-              <Route path="/account" component={AccountPage} />
-              <Route path="/profile/:id" component={ProfilePage} />
+              <PrivateRoot path="/account" component={AccountPage} />
+              <PrivateRoot path="/profile/:id" component={ProfilePage} />
               <Route path="/error" component={ErrorComponent} />
             </Container>
           </>

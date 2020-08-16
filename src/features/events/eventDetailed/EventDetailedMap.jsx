@@ -12,7 +12,7 @@ const EventDetailedMap = ({ latLng }) => {
     <Segment attached="bottom" style={{ padding: 0 }}>
       <div style={{ height: 300, width: "100%" }}>
         <GoogleMapReact
-          bootstrapURLKeys={{ key: "AIzaSyCnz4Avd4LMn2WLK3Zv_w1MPL3q0f0UJ3M" }}
+          bootstrapURLKeys={{ key: process.env.REACT_APP_API_KEY }}
           center={latLng}
           zoom={zoom}
         >

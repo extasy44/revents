@@ -24,7 +24,7 @@ const UnauthModal = ({ history, setModalOpen }) => {
   };
 
   const handleOpenLoginModal = (modalType) => {
-    dispatch(openModal(modalType));
+    dispatch(openModal({ modalType }));
     setOpen(false);
     setModalOpen(false);
   };
@@ -39,26 +39,14 @@ const UnauthModal = ({ history, setModalOpen }) => {
             fluid
             color="teal"
             content="Login"
-            onClick={() =>
-              dispatch(
-                openModal({
-                  modalType: "LoginForm",
-                })
-              )
-            }
+            onClick={() => handleOpenLoginModal("LoginForm")}
           />
           <Button.Or />
           <Button
             fluid
             color="green"
             content="Register"
-            onClick={() =>
-              dispatch(
-                openModal({
-                  modalType: "RegisterForm",
-                })
-              )
-            }
+            onClick={() => handleOpenLoginModal("RegisterForm")}
           />
         </Button.Group>
         <Divider />

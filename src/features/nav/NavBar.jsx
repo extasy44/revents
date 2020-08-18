@@ -20,7 +20,6 @@ const NavBar = () => {
           Re-vents
         </Menu.Item>
         <Menu.Item as={NavLink} to="/events" name="Events" />
-        <Menu.Item as={NavLink} to="/sandbox" name="sandbox" />
         {authenticated ? <SignedInMenu /> : <SignedOutMenu />}
       </Container>
     </Menu>

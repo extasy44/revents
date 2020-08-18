@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { Segment, Image, Item, Button, Header } from "semantic-ui-react";
+import { Segment, Image, Item, Button, Header, Label } from "semantic-ui-react";
 import { format } from "date-fns";
 import {
   addUserAttendance,
@@ -10,7 +10,7 @@ import {
 } from "../../../app/firestore/firestoreService";
 import UnauthModal from "../../auth/UnauthModal";
 
-const EventDetailedHeader = ({ event, isGoing, isHost }) => {
+const EventDetailedHeader = ({ event, isGoing, isHost, isCancelled }) => {
   const [loading, setLoading] = useState(false);
   const { authenticated } = useSelector((state) => state.auth);
   const [modalOpen, setModalOpen] = useState(false);
@@ -51,6 +51,13 @@ const EventDetailedHeader = ({ event, isGoing, isHost }) => {
           />
 
           <Segment basic style={eventImageTextStyle}>
+            {isCancelled && (
+              <Label
+                color="red"
+                size="huge"
+                content="This event has been cancelled"
+              />
+            )}
             <Item.Group>
               <Item>
                 <Item.Content>

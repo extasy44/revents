@@ -34,7 +34,12 @@ const EventDetailedPage = ({ match }) => {
   return (
     <Grid>
       <Grid.Column width={10}>
-        <EventDetailedHeader event={event} isGoing={isGoing} isHost={isHost} />
+        <EventDetailedHeader
+          event={event}
+          isGoing={isGoing}
+          isHost={isHost}
+          isCancelled={event.isCancelled}
+        />
         <EventDetailedInfo event={event} />
         <EventDetailedChat eventId={event.id} />
       </Grid.Column>

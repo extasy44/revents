@@ -19,12 +19,19 @@ import {
   updateEventInFirestoe,
   addEventToFirestore,
   cancelEventToggle,
+  deleteEventInFirestore,
 } from "../../../app/firestore/firestoreService";
 import useFirestoreDoc from "../../../app/hooks/useFirestoreDoc";
-import { listenToSelectedEvent } from "../eventActions";
+import {
+  listenToSelectedEvent,
+  deleteEvent,
+  updateEvent,
+  clearSelectedEvent,
+} from "../eventActions";
 import LoadingComponent from "../../../app/layout/LoadingComponent";
+import { useEffect } from "react";
 
-const EventForm = ({ match }) => {
+const EventForm = ({ match, history, location }) => {
   const { selectedEvent } = useSelector((state) => state.event);
 
   const { loading, error } = useSelector((state) => state.async);
@@ -32,6 +39,11 @@ const EventForm = ({ match }) => {
   const dispatch = useDispatch();
   const [loadingCancel, setLoadingCancel] = useState(false);
   const [confirmOpen, setConfirmOpen] = useState(false);
+
+  useEffect(() => {
+    if (location.pathname !== "/createEvent") return;
+    dispatch(clearSelectedEvent());
+  }, [dispatch, location.pathname]);
 
   const initialValues = selectedEvent ?? {
     title: "",
@@ -62,17 +74,30 @@ const EventForm = ({ match }) => {
     try {
       await cancelEventToggle(event);
       setLoadingCancel(false);
+      updateCancelToggle(event);
     } catch (error) {
       setLoadingCancel(false);
       toast.error(error.message);
     }
   };
 
+  const handleDelete = (eventId) => {
+    deleteEventInFirestore(eventId);
+    dispatch(deleteEvent(eventId));
+  };
+
+  const updateCancelToggle = (event) => {
+    event.isCancelled = !event.isCancelled;
+    dispatch(updateEvent(event));
+  };
+
   useFirestoreDoc({
     query: () => listenToEventFromFirestore(match.params.id),
     data: (event) => dispatch(listenToSelectedEvent(event)),
     deps: [match.params.id, dispatch],
-    shouldExecute: !!match.params.id,
+    shouldExecute:
+      match.params.id !== selectedEvent?.id &&
+      location.pathname !== "/createEvent",
   });
 
   if (loading) return <LoadingComponent />;
@@ -81,6 +106,7 @@ const EventForm = ({ match }) => {
   return (
     <Segment clearing>
       <Formik
+        enableReinitialize
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={async (values, { setSubmitting }) => {
@@ -130,6 +156,7 @@ const EventForm = ({ match }) => {
               showTimeSelect
               timeCaption="time"
               dateFormat="MMMM d, yyyy h:mm a"
+              autoComplete="off"
             />
             {selectedEvent && (
               <Button
@@ -165,16 +192,24 @@ const EventForm = ({ match }) => {
         )}
       </Formik>
       {selectedEvent && (
-        <Confirm
-          content={
-            selectedEvent.isCancelled
-              ? "This will re-activate the event. Are you sure?"
-              : "This will cancel the event. Are you sure?"
-          }
-          open={confirmOpen}
-          onCancel={() => setConfirmOpen(false)}
-          onConfirm={() => handleCancelToggle(selectedEvent)}
-        />
+        <>
+          <Confirm
+            content={
+              selectedEvent.isCancelled
+                ? "This will re-activate the event. Are you sure?"
+                : "This will cancel the event. Are you sure?"
+            }
+            open={confirmOpen}
+            onCancel={() => setConfirmOpen(false)}
+            onConfirm={() => handleCancelToggle(selectedEvent)}
+          />
+          <Button
+            onClick={() => handleDelete(selectedEvent.id)}
+            color="red"
+            floated="right"
+            content="Delete"
+          />
+        </>
       )}
     </Segment>
   );

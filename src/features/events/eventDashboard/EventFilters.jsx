@@ -29,7 +29,7 @@ const EventFilters = ({ loading }) => {
           <Menu.Item
             content="I'm hosting"
             active={filter === "isHosting"}
-            onClick={() => dispatch(setFilter("isHost"))}
+            onClick={() => dispatch(setFilter("isHosting"))}
             disabled={loading}
           />
         </Menu>

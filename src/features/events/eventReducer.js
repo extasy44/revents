@@ -11,6 +11,7 @@ import {
   SET_START_DATE,
   RETAIN_STATE,
   CLEAR_SELECTED_EVENT,
+  FILTER_EVENT,
 } from "./eventConstants";
 
 const initialState = {
@@ -49,6 +50,14 @@ export default (state = initialState, { type, payload }) => {
       return {
         ...state,
         events: [...state.events, ...payload.events],
+        moreEvents: payload.moreEvents,
+        lastVisible: payload.lastVisible,
+      };
+
+    case FILTER_EVENT:
+      return {
+        ...state,
+        events: payload.events,
         moreEvents: payload.moreEvents,
         lastVisible: payload.lastVisible,
       };

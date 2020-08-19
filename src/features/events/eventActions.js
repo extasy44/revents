@@ -9,6 +9,7 @@ import {
   CLEAR_EVENTS,
   SET_FILTER,
   SET_START_DATE,
+  FILTER_EVENT,
 } from "./eventConstants";
 import {
   asyncActionStart,

@@ -11,14 +11,15 @@ const NavBar = () => {
   return (
     <Menu inverted fixed="top">
       <Container>
-        <Menu.Item as={NavLink} exact to="/" header>
+        <NavLink exact to="/" header>
           <img
+            className="logo"
             src="/assets/logo.png"
             alt="logo"
-            style={{ marginRight: "10px" }}
+            style={{ marginRight: "10px", marginTop: "20px" }}
+            width="120px"
           />
-          Re-vents
-        </Menu.Item>
+        </NavLink>
         <Menu.Item as={NavLink} to="/events" name="Events" />
         {authenticated ? <SignedInMenu /> : <SignedOutMenu />}
       </Container>

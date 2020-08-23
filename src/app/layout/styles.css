@@ -80,3 +80,30 @@ body {
   border: none;
   box-shadow: 0 1px 2px 0 rgba(34, 36, 38, 0.15);
 }
+
+/* Responsive css */
+@media screen and (max-width: 480px) {
+  .ui.grid > [class*="wide"].column {
+    width: 100% !important;
+  }
+
+  .ui.five.cards > .card {
+    width: 100% !important;
+  }
+
+  .ui.relaxed.divided.items > .item {
+    width: 40%;
+  }
+
+  .ui.orange.ribbon.label {
+    z-index: 99;
+  }
+  .ui.menu .item {
+    padding: 0.2em;
+  }
+
+  .logo {
+    margin-top: 10px !important;
+    margin-left: 5px;
+  }
+}

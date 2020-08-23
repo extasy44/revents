@@ -11,7 +11,10 @@ const EventListItem = ({ event }) => {
       <Segment>
         <Item.Group>
           <Item>
-            <Item.Image size="tiny" circular src={event.hostPhotoURL} />
+            <Item.Image
+              src={`/assets/categoryImages/${event.category}.jpg`}
+              size="small"
+            />
             <Item.Content>
               <Item.Header
                 as={Link}

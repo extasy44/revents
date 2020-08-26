@@ -1,3 +1,20 @@
+A react app built with redux, hooks, sematec-ui and firebase. This app uses Google APIs including google maps, google place auto complete APIs.
+Firestore for main database and realtime database for a chat system. Deployed on firebase hosting.
+
+[Live Link](https://revents-app-e67ba.firebaseapp.com/)
+
+## Tools
+
+- React
+- Redux
+- Hooks
+- Semantec-UI
+- Firebase
+- Firestore
+- Firebase Real-time database
+- Google MAP and Place APIs
+- Formik
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
